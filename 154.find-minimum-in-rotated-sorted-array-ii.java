@@ -45,16 +45,16 @@
 
 // @lc code=start
 class Solution {
-    public int findMin(int[] nums) { //[3,3,1,3]
+    public int findMin(int[] nums) { // [3,3,1,3]
         int left = 0, right = nums.length - 1;
         int mid = left;
         while (left < right) {
             mid = left + (right - left) / 2;
-            if (nums[mid] < nums[right]){
+            if (nums[mid] < nums[right]) {
                 right = mid;
-            }else if (nums[mid] > nums[right]){
+            } else if (nums[mid] > nums[right]) {
                 left = mid + 1;
-            }else{
+            } else {
                 right--;
             }
         }
