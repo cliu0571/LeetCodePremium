@@ -32,17 +32,43 @@
 
 // @lc code=start
 /**
- * Definition for singly-linked list.
- * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode(int x) { val = x; }
- * }
+ * Definition for singly-linked list. public class ListNode { int val; ListNode
+ * next; ListNode(int x) { val = x; } }
  */
 class Solution {
     public ListNode sortList(ListNode head) {
-        
+        if (head == null || head.next == null)
+            return head;
+        ListNode slow = head, fast = head;
+        ListNode prev = null;
+        while (fast != null && fast.next != null) {
+            prev = slow;
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        prev.next = null;
+
+        return merge(sortList(head), sortList(slow));
+    }
+
+    private ListNode merge(ListNode one, ListNode two) {
+        ListNode dummy = new ListNode(0);
+        ListNode curr = dummy;
+        while (one != null & two != null) {
+            if (one.val < two.val) {
+                curr.next = one;
+                one = one.next;
+            } else {
+                curr.next = two;
+                two = two.next;
+            }
+            curr = curr.next;
+        }
+        if (one != null)
+            curr.next = one;
+        if (two != null)
+            curr.next = two;
+        return dummy.next;
     }
 }
 // @lc code=end
-
