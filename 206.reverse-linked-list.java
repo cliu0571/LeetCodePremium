@@ -67,5 +67,14 @@ class Solution {
         head.next = newHead;
         return reverseListInt(next, head);
     }
+
+    public class ListNode {
+        int val;
+        ListNode next;
+
+        ListNode(int x) {
+            val = x;
+        }
+    }
 }
 // @lc code=end
