@@ -45,9 +45,11 @@ class Solution {
         int mid = left;
         while (left < right) {
             mid = left + (right - left) / 2;
+            // mid < right means nums[mid..right] is sorted, so answer is among left..mid
             if (nums[mid] < nums[right]) {
                 right = mid;
             } else {
+                // no idea about nums[left...mid], but we can exclude nums[mid]
                 left = mid + 1;
             }
         }

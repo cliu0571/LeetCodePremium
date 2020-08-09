@@ -51,10 +51,14 @@ class Solution {
         while (left < right) {
             mid = left + (right - left) / 2;
             if (nums[mid] < nums[right]) {
+                // nums[mid..right] is sorted, answer is among left..mid
                 right = mid;
             } else if (nums[mid] > nums[right]) {
+                // left..mid is sorted, ans is among mid+1..right
                 left = mid + 1;
             } else {
+                // mid==right -> no idea about mid..right exclude right
+                // 3,3,1,3
                 right--;
             }
         }
