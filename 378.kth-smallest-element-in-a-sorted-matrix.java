@@ -1,3 +1,6 @@
+import java.util.Comparator;
+import java.util.PriorityQueue;
+
 /*
  * @lc app=leetcode id=378 lang=java
  *
@@ -39,25 +42,43 @@
  */
 
 // @lc code=start
+class MyNode {
+    public int value;
+    public int row;
+    public int col;
+
+    public MyNode(int value, int row, int col) {
+        this.value = value;
+        this.row = row;
+        this.col = col;
+    }
+}
+
+class MyHeapComparator implements Comparator<MyNode> {
+    @Override
+    public int compare(MyNode o1, MyNode o2) {
+        return o1.value - o2.value;
+    }
+
+}
+
 class Solution {
     public int kthSmallest(int[][] matrix, int k) {
-        int m = matrix.length, n = matrix[0].length;
-        int low = matrix[0][0], high = matrix[m - 1][n - 1];
-        while (low < high) {
-            int mid = (high - low) / 2 + low;
-            int count = 0; 
-            int j = n - 1;
-            for (int i = 0; i < m; i++) {
-                while (j >= 0 && matrix[i][j] > mid)
-                    j--;
-                count += j + 1;
-            }
-            if (count < k)
-                low = mid + 1;
-            else
-                high = mid;
+        int n = matrix.length;
+        PriorityQueue<MyNode> minHeap = new PriorityQueue<>(Math.min(n, k), new MyHeapComparator());
+        for (int i = 0; i < Math.min(n, k); i++) {
+            minHeap.offer(new MyNode(matrix[i][0], i, 0));
         }
-        return low;
+        MyNode curr = minHeap.peek();
+        while (k-- > 0) {
+            curr = minHeap.poll();
+            int row = curr.row;
+            int col = curr.col;
+            if (col < n - 1) {
+                minHeap.offer(new MyNode(matrix[row][col + 1], row, col + 1));
+            }
+        }
+        return curr.value;
     }
 }
 // @lc code=end
