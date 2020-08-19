@@ -72,6 +72,5 @@ class Solution {
         }
         return i;
     }
-}
-// @lc code=end
+} // @lc code=end
 
