@@ -1,3 +1,4 @@
+
 /*
  * @lc app=leetcode id=917 lang=java
  *
@@ -73,21 +74,30 @@
 // S=O(n)
 class Solution {
     public String reverseOnlyLetters(String S) {
-        Stack<Character> letters = new Stack();
-        for (char c: S.toCharArray())
-            if (Character.isLetter(c))
-                letters.push(c);
+        // return solution1(S);
+        return solution2(S);
+    }
 
-        StringBuilder ans = new StringBuilder();
-        for (char c: S.toCharArray()) {
-            if (Character.isLetter(c))
-                ans.append(letters.pop());
-            else
-                ans.append(c);
+    // two pointers, T=O(n), S=O(1)
+    private String solution2(String S) {
+        int n = S.length();
+        int left = 0, right = n - 1;
+        char[] s = S.toCharArray();
+        while (left < right) {
+            if (Character.isLetter(s[left]) && Character.isLetter(s[right])) {
+                swap(s, left++, right--);
+            }else{
+                if (!Character.isLetter(s[left])) {++left;}
+                if (!Character.isLetter(s[right])) {--right;}
+            }
         }
+        return new String(s);
+    }
 
-        return ans.toString();
+    private void swap(char[] s, int left, int right) {
+        char temp = s[left];
+        s[left] = s[right];
+        s[right] = temp;
     }
 }
 // @lc code=end
-
