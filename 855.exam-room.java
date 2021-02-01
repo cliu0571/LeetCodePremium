@@ -75,6 +75,7 @@ class ExamRoom {
     public int seat() {
         //Let's determine student, the position of the next
         //student to sit down.
+        
         int student = 0;
         if (students.size() > 0) {
             //Tenatively, dist is the distance to the closest student,
