@@ -64,7 +64,6 @@
 // @lc code=start
 class Solution {
     public int removeDuplicates(int[] nums) {
-
         int slow = 0, fast = 0;
         while (fast < nums.length) {
             if (nums[slow] == nums[fast]) {
