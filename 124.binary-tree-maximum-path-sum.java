@@ -21,6 +21,7 @@
  * }
  */
 class Solution {
+  // T O(n), S O(H)
   int max = Integer.MIN_VALUE;
 
   public int maxPathSum(TreeNode root) {
