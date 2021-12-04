@@ -17,18 +17,20 @@ class Solution {
         this.rows = dungeon.length;
         this.cols = dungeon[0].length;
         this.dp = new int[rows][cols];
+        
         for (int[] arr : this.dp) {
             Arrays.fill(arr, this.inf);
         }
-        int currCell, rightHealth, downHealth, nextHealth, minHealth;
+
         for (int row = this.rows - 1; row >= 0; --row) {
             for (int col = this.cols - 1; col >= 0; --col) {
-                currCell = dungeon[row][col];
+                int currCell = dungeon[row][col];
 
-                rightHealth = getMinHealth(currCell, row, col + 1);
-                downHealth = getMinHealth(currCell, row + 1, col);
-                nextHealth = Math.min(rightHealth, downHealth);
+                int rightHealth = getMinHealth(currCell, row, col + 1);
+                int downHealth = getMinHealth(currCell, row + 1, col);
+                int nextHealth = Math.min(rightHealth, downHealth);
 
+                int minHealth = inf;
                 if (nextHealth != inf) {
                     minHealth = nextHealth;
                 } else {
