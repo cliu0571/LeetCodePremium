@@ -14,11 +14,14 @@ class Solution {
         int[] s1map = new int[26];
         int[] s2map = new int[26];
 
+        // s1 = a, b, c
+        // s2 = d, e, f, a, b, c
         for (int i = 0; i < s1.length(); i++) {
             s1map[s1.charAt(i) - 'a']++;
             s2map[s2.charAt(i) - 'a']++;
         }
 
+        // sliding window on s2: def -> efa -> fab -> abc
         for (int i = 0; i < s2.length() - s1.length(); i++) {
             if (matches(s1map, s2map))
                 return true;
