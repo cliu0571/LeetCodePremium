@@ -23,6 +23,7 @@ class Solution {
     // These are all of the valid finishing states for our DFA.
     private static final Set<Integer> validFinalStates = Set.of(1, 4, 7);
 
+    // T O(n) S O(1)
     public boolean isNumber(String s) {
         int currentState = 0;
         String group = "";
