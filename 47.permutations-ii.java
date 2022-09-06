@@ -44,7 +44,7 @@ class Solution {
         Arrays.sort(nums);
         dfsHelper(ans, nums, 0);
         return ans;
-    }
+    } 
 
     private void dfsHelper(List<List<Integer>> ans, int[] nums, int start) {
         if (start == nums.length) {
