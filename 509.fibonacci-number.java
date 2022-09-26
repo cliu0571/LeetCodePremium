@@ -61,17 +61,18 @@
 // @lc code=start
 class Solution {
     public int fib(int N) {
-        if (N < 2){
+        if (N < 2) {
             return N;
         }
-        int[] ans = new int[N + 1];
-        ans[0] = 0;
-        ans[1] = 1;
+        // ans_i_1 -> ans[i-1]
+        // ans_i_2 -> ans[i-2]
+        int ans_i_1 = 1, ans_i_2 = 0;
         for (int i = 2; i < N + 1; i++) {
-            ans[i] = ans[i - 1] + ans[i - 2];
+            int ans_i = ans_i_1 + ans_i_2;
+            ans_i_2 = ans_i_1;
+            ans_i_1 = ans_i;
         }
-
-        return ans[N];
+        return ans_i_1;
     }
 }
 // @lc code=end
