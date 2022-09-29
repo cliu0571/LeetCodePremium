@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 /*
  * @lc app=leetcode id=46 lang=java
@@ -36,31 +37,33 @@ import java.util.List;
 
 // @lc code=start
 class Solution {
+    List<List<Integer>> ans = new LinkedList<>();
+
     public List<List<Integer>> permute(int[] nums) {
-        List<List<Integer>> ans = new ArrayList<>();
-        dfsHelper(ans, nums, 0);
+        LinkedList<Integer> track = new LinkedList<>();
+        boolean used[] = new boolean[nums.length];
+        backtrack(nums, track, used);
         return ans;
     }
 
-    private void dfsHelper(List<List<Integer>> ans, int[] nums, int start) {
-        if (start == nums.length) {
-            List<Integer> temp = new ArrayList<>();
-            for (int num : nums)
-                temp.add(num);
-            ans.add(temp);
+    private void backtrack(int[] nums, LinkedList<Integer> track, boolean[] used) {
+        if (track.size() == nums.length) {
+            ans.add(new LinkedList<Integer>(track));
             return;
         }
-        for (int i = start; i < nums.length; i++) {
-            swap(nums, i, start);
-            dfsHelper(ans, nums, start + 1);
-            swap(nums, i, start);
+
+        for (int i = 0; i < nums.length; i++) {
+            // skip used elements
+            if (used[i]) {
+                continue;
+            }
+            track.add(nums[i]);
+            used[i]=true;
+            backtrack(nums, track, used);
+            track.removeLast();
+            used[i] = false;
         }
     }
 
-    private void swap(int[] nums, int left, int right) {
-        int temp = nums[left];
-        nums[left] = nums[right];
-        nums[right] = temp;
-    }
 }
 // @lc code=end
