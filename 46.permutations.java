@@ -38,9 +38,9 @@ import java.util.List;
 // @lc code=start
 class Solution {
     List<List<Integer>> ans = new LinkedList<>();
+    LinkedList<Integer> track = new LinkedList<>();
 
     public List<List<Integer>> permute(int[] nums) {
-        LinkedList<Integer> track = new LinkedList<>();
         boolean used[] = new boolean[nums.length];
         backtrack(nums, track, used);
         return ans;
