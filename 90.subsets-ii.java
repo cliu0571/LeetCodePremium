@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -21,12 +22,12 @@ import java.util.Set;
  *
  * Given a collection of integers that might contain duplicates, nums, return
  * all possible subsets (the power set).
- * 
+ *
  * Note: The solution set must not contain duplicate subsets.
- * 
+ *
  * Example:
- * 
- * 
+ *
+ *
  * Input: [1,2,2]
  * Output:
  * [
@@ -37,30 +38,34 @@ import java.util.Set;
  * ⁠ [1,2],
  * ⁠ []
  * ]
- * 
- * 
+ *
+ *
  */
 
 // @lc code=start
 class Solution {
-    public List<List<Integer>> subsetsWithDup(int[] nums) {
-        List<List<Integer>> ans = new ArrayList<>();
-        Arrays.sort(nums);
-        dfsHelper(ans, new ArrayList<>(), nums, 0);
-        return ans;
-    }
 
-    private void dfsHelper(List<List<Integer>> ans, List<Integer> temp, int[] nums, int start) {
-        ans.add(new ArrayList<>(temp));
-        Set<Integer> visited = new HashSet<>();
-        for (int i = start; i < nums.length; i++) {
-            if (visited.add(nums[i])) {
-                temp.add(nums[i]);
-                dfsHelper(ans, temp, nums, i + 1);
-                temp.remove(temp.size() - 1);
-            }
-        }
-    }
+  List<List<Integer>> ans = new LinkedList<>();
+  LinkedList<Integer> track = new LinkedList<>();
 
+  public List<List<Integer>> subsetsWithDup(int[] nums) {
+    Arrays.sort(nums);
+    backtrack(nums, 0);
+    return ans;
+  }
+
+  private void backtrack(int[] nums, int start) {
+    ans.add(new LinkedList<>(track));
+
+    for (int i = start; i < nums.length; i++) {
+      if (i > start && nums[i] == nums[i - 1]) {
+        continue;
+      }
+
+      track.addLast(nums[i]);
+      backtrack(nums, i + 1);
+      track.removeLast();
+    }
+  }
 }
 // @lc code=end
