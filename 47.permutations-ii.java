@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -22,10 +23,10 @@ import java.util.Set;
  *
  * Given a collection of numbers that might contain duplicates, return all
  * possible unique permutations.
- * 
+ *
  * Example:
- * 
- * 
+ *
+ *
  * Input: [1,1,2]
  * Output:
  * [
@@ -33,41 +34,46 @@ import java.util.Set;
  * ⁠ [1,2,1],
  * ⁠ [2,1,1]
  * ]
- * 
- * 
+ *
+ *
  */
 
 // @lc code=start
 class Solution {
-    public List<List<Integer>> permuteUnique(int[] nums) {
-        List<List<Integer>> ans = new ArrayList<List<Integer>>();
-        Arrays.sort(nums);
-        dfsHelper(ans, nums, 0);
-        return ans;
-    } 
 
-    private void dfsHelper(List<List<Integer>> ans, int[] nums, int start) {
-        if (start == nums.length) {
-            List<Integer> temp = new ArrayList<>();
-            for (int num : nums)
-                temp.add(num);
-            ans.add(temp);
-            return;
-        }
-        Set<Integer> appeared = new HashSet<>();
-        for (int i = start; i < nums.length; ++i) {
-            if (appeared.add(nums[i])) {
-                swap(nums, start, i);
-                dfsHelper(ans, nums, start + 1);
-                swap(nums, start, i);
-            }
-        }
+  List<List<Integer>> ans = new LinkedList<>();
+  LinkedList<Integer> track = new LinkedList<>();
+  boolean[] used;
+
+  public List<List<Integer>> permuteUnique(int[] nums) {
+    used = new boolean[nums.length];
+    Arrays.sort(nums);
+    backtrack(nums);
+    return ans;
+  }
+
+  private void backtrack(int[] nums) {
+    if (track.size() == nums.length) {
+      ans.add(new LinkedList<>(track));
+      return;
     }
 
-    private void swap(int[] nums, int left, int right) {
-        int temp = nums[left];
-        nums[left] = nums[right];
-        nums[right] = temp;
+    for (int i = 0; i < nums.length; i++) {
+      if (used[i]) {
+        continue;
+      }
+
+      // !used[i-1]: e.g. [1,2,2']-> 2' be selected only if 2 is used
+      if (i > 0 && nums[i] == nums[i - 1] && !used[i - 1]) {
+        continue;
+      }
+
+      used[i] = true;
+      track.addLast(nums[i]);
+      backtrack(nums);
+      used[i] = false;
+      track.removeLast();
     }
+  }
 }
 // @lc code=end
