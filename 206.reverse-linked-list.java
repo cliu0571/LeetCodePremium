@@ -57,24 +57,15 @@ class Solution {
 
     /* recursive solution */
     private ListNode reverseListRecursive(ListNode head) {
-        return reverseListInt(head, null);
-    }
-
-    private ListNode reverseListInt(ListNode head, ListNode newHead) {
-        if (head == null)
-            return newHead;
-        ListNode next = head.next;
-        head.next = newHead;
-        return reverseListInt(next, head);
-    }
-
-    public class ListNode {
-        int val;
-        ListNode next;
-
-        ListNode(int x) {
-            val = x;
+        if (head == null || head.next == null){
+            return head;
         }
+        ListNode last = reverseListRecursive(head.next);
+        head.next.next = head;
+        head.next = null;
+        return last;
     }
+
+   
 }
 // @lc code=end
